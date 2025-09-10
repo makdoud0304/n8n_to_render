@@ -2,9 +2,9 @@ services:
   - type: web
     name: n8n
     env: docker
-    region: Oregon # optional (defaults to oregon)
-    plan: free # optional (defaults to starter)
-    branch: main # optional (defaults to master)
+    region: oregon   # Amérique du Nord
+    plan: free
+    branch: main
     numInstances: 1
     healthCheckPath: /healthz
     envVars:
@@ -31,7 +31,7 @@ services:
           name: n8nDB
           property: password
       - key: PORT
-        value: 5679
+        value: "5679"
       - key: N8N_LOG_LEVEL
         value: info
       - key: GENERIC_TIMEZONE
@@ -45,5 +45,5 @@ services:
 
 databases:
   - name: n8nDB
-    region: Oregont # optional (defaults to oregon)
+    region: oregon   # même région que le service
     plan: free
