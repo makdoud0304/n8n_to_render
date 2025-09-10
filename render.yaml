@@ -2,9 +2,9 @@ services:
   - type: web
     name: n8n
     env: docker
-    region: oregon        # Amérique du Nord (Render ne propose pas "Canada", Oregon est le plus proche)
-    plan: free            # optionnel (par défaut "starter")
-    branch: main          # optionnel (par défaut "master")
+    region: Oregon # optional (defaults to oregon)
+    plan: free # optional (defaults to starter)
+    branch: main # optional (defaults to master)
     numInstances: 1
     healthCheckPath: /healthz
     envVars:
@@ -31,11 +31,11 @@ services:
           name: n8nDB
           property: password
       - key: PORT
-        value: "5697"             # port personnalisé
+        value: 5679
       - key: N8N_LOG_LEVEL
         value: info
       - key: GENERIC_TIMEZONE
-        value: America/Toronto    # fuseau horaire Canada
+        value: America/Toronto
       - key: TZ
         value: America/Toronto
       - key: N8N_DEFAULT_LOCALE
@@ -45,5 +45,5 @@ services:
 
 databases:
   - name: n8nDB
-    region: oregon   # Amérique du Nord
+    region: Oregont # optional (defaults to oregon)
     plan: free
