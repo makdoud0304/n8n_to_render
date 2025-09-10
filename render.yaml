@@ -2,63 +2,48 @@ services:
   - type: web
     name: n8n
     env: docker
-    region: oregon
-    plan: free
-    branch: main
+    region: frankfurt # optional (defaults to oregon)
+    plan: free # optional (defaults to starter)
+    branch: main # optional (defaults to master)
     numInstances: 1
     healthCheckPath: /healthz
-
-    # (Optionnel) Disque persistant pour /home/node/.n8n
-    # Décommente si ton plan inclut les disks
-    # disk:
-    #   name: n8n-data
-    #   mountPath: /home/node/.n8n
-    #   sizeGB: 2
-
     envVars:
-      # Base Postgres managée par Render
       - key: DB_TYPE
         value: postgresdb
       - key: DB_POSTGRESDB_HOST
-        fromDatabase: { name: n8n-db, property: host }
+        fromDatabase:
+          name: n8nDB
+          property: host
       - key: DB_POSTGRESDB_DATABASE
-        fromDatabase: { name: n8n-db, property: database }
+        fromDatabase:
+          name: n8nDB
+          property: database
       - key: DB_POSTGRESDB_PORT
-        fromDatabase: { name: n8n-db, property: port }
+        fromDatabase:
+          name: n8nDB
+          property: port
       - key: DB_POSTGRESDB_USER
-        fromDatabase: { name: n8n-db, property: user }
+        fromDatabase:
+          name: n8nDB
+          property: user
       - key: DB_POSTGRESDB_PASSWORD
-        fromDatabase: { name: n8n-db, property: password }
-
-      # Réseau / logs
+        fromDatabase:
+          name: n8nDB
+          property: password
       - key: PORT
         value: 5678
       - key: N8N_LOG_LEVEL
         value: info
-
-      # Locale (Québec)
       - key: GENERIC_TIMEZONE
-        value: America/Toronto
+        value: Europe/Paris
       - key: TZ
-        value: America/Toronto
+        value: Europe/Paris
       - key: N8N_DEFAULT_LOCALE
         value: fr
-
-      # Sécurité
       - key: N8N_ENCRYPTION_KEY
         generateValue: true
-      - key: N8N_BASIC_AUTH_ACTIVE
-        value: "true"
-      - key: N8N_BASIC_AUTH_USER
-        value: admin
-      - key: N8N_BASIC_AUTH_PASSWORD
-        generateValue: true
-
-      # À ajouter APRÈS le 1er déploiement (dans Render → Environment)
-      # - key: WEBHOOK_URL
-      #   value: https://<ton-service>.onrender.com/
 
 databases:
-  - name: n8n-db
-    region: oregon
+  - name: n8nDB
+    region: frankfurt # optional (defaults to oregon)
     plan: free
