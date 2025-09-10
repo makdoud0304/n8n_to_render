@@ -3,21 +3,37 @@ services:
     name: n8n-on-render
     env: docker
     plan: free
-    region: frankfurt         # ou oregon
+    region: oregon            # changé: déploie en Oregon
     dockerfilePath: ./Dockerfile
     autoDeploy: true
     healthCheckPath: /healthz
     envVars:
+      # Port interne n8n (doit matcher Dockerfile)
+      - key: N8N_PORT
+        value: "5697"
       - key: N8N_HOST
         value: "0.0.0.0"
-      - key: N8N_PORT
-        value: "5678"
+
+      # À mettre à jour APRÈS le 1er déploiement avec l’URL publique exacte
+      - key: WEBHOOK_URL             # pour compat n8n
+        value: "https://example.onrender.com/"
+      - key: N8N_PUBLIC_URL          # recommandé par n8n pour les webhooks
+        value: "https://example.onrender.com/"
+      - key: N8N_EDITOR_BASE_URL     # URL de l’UI
+        value: "https://example.onrender.com/"
+
+      # Divers
+      - key: N8N_DIAGNOSTICS_ENABLED
+        value: "false"
+      - key: N8N_PAYLOAD_SIZE_MAX
+        value: "64"                 # Mo
       - key: GENERIC_TIMEZONE
         value: "America/Toronto"
+
+      # Secret à saisir dans le dashboard Render (ne pas committer la valeur)
       - key: N8N_ENCRYPTION_KEY
-        sync: false           # ajoute la valeur dans le dashboard Render après création
-      - key: WEBHOOK_URL
-        value: "https://example.onrender.com/"  # remplace après le 1er déploiement
+        sync: false
+
     disk:
       name: n8n-data
       mountPath: /home/node/.n8n
