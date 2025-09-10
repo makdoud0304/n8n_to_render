@@ -31,13 +31,13 @@ services:
           name: n8nDB
           property: password
       - key: PORT
-        value: 5678
+        value: 5679
       - key: N8N_LOG_LEVEL
         value: info
       - key: GENERIC_TIMEZONE
-        value: Europe/Paris
+        value: "America/Toronto"
       - key: TZ
-        value: Europe/Paris
+        value: "America/Toronto"
       - key: N8N_DEFAULT_LOCALE
         value: fr
       - key: N8N_ENCRYPTION_KEY
